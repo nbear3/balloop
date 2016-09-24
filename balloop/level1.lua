@@ -29,7 +29,7 @@ function scene:create( event )
 	local background = display.newRect( 0, 0, screenW, screenH )
 	background.anchorX = 0
 	background.anchorY = 0
-	background:setFillColor( .5 )
+	background:setFillColor( .16, .14, .21 )
 	
 	-- make a crate (off-screen), position it, and rotate slightly
 	local crate = display.newImageRect( "crate.png", 90, 90 )
@@ -39,19 +39,9 @@ function scene:create( event )
 	-- add physics to the crate
 	physics.addBody( crate, { density=1.0, friction=0.3, bounce=0.3 } )
 	
-	-- create a grass object and add physics (with custom shape)
-	local grass = display.newImageRect( "grass.png", screenW, 82 )
-	grass.anchorX = 0
-	grass.anchorY = 1
-	grass.x, grass.y = 0, display.contentHeight
-	
-	-- define a shape that's slightly shorter than image bounds (set draw mode to "hybrid" or "debug" to see)
-	local grassShape = { -halfW,-34, halfW,-34, halfW,34, -halfW,34 }
-	physics.addBody( grass, "static", { friction=0.3, shape=grassShape } )
 	
 	-- all display objects must be inserted into group
 	sceneGroup:insert( background )
-	sceneGroup:insert( grass)
 	sceneGroup:insert( crate )
 end
 
