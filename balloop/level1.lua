@@ -103,7 +103,7 @@ scene:addEventListener( "show", scene )
 scene:addEventListener( "hide", scene )
 scene:addEventListener( "destroy", scene )
 
-spawner.spawnController("start", spawnParams, physics, "balloon.png")
+spawner.spawnController("start", spawnParams, physics, "balloon_red.png")
 
 -----------------------------------------------------------------------------------------
 
