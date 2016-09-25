@@ -4,11 +4,29 @@ math.randomseed( os.time() )
 
 local spawnTimer
 local spawnedObjects = {}
+local spawnedSprites = {}
 local plus_or_minus = 0
 local previousColor = 0
 local newColor = 0
 
 local image_table = {"img/balloon_red_lit.png", "img/balloon_blue_lit.png", "img/balloon_green_lit.png", "img/balloon_purple_lit.png"}
+local sheetOptions = {
+	width = 128,
+	height = 128,
+	numFrames = 4,
+	sheetContentWidth = 512,
+	sheetContentHeight = 128
+}
+purple_sheet = graphics.newImageSheet("img/balloon_purple_sheet.png", sheetOptions)
+local animations_table = {
+
+	{ name = "purplePop",
+        start = 1,
+        count = 4,
+        time = 100,
+        loopCount = 1,
+        loopDirection = "forward"}
+}
 local sound_table = {blop = audio.loadSound("blop.wav")}
 
 
@@ -18,7 +36,11 @@ local function destroyBalloons(obj)
 end
 
 local function balloonTapListener( event )
-    destroyBalloons(event.target)
+	event.target:setSequence("purplePop")
+	event.target:play()
+	if(event.phase == "ended") then
+		destroyBalloons(event.target)
+	end
     mySource = audio.play(sound_table.blop)
 end
 
@@ -74,7 +96,7 @@ local function spawnItem( bounds, physics)
 
 	-- create sample item
 	local index = calculateColorIndex(image_table)
-	item = display.newImageRect( image_table[index], 96, 96 )
+	item = display.newSprite( purple_sheet, animations_table )
 
 	local velocity = 150
 
