@@ -18,7 +18,7 @@ local spawnParams = {
 	xDelta = 50,
 	yMin = display.contentHeight + 100,
 	yMax = display.contentHeight + 200,
-	spawnTime = 1000,
+	spawnTime = 700,
 	spawnInitial = 0
 }
 
