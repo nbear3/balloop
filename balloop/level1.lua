@@ -22,8 +22,6 @@ local spawnParams = {
 	spawnInitial = 0
 }
 
-local balloon_images = {"balloon_lit.png"}
-
 --------------------------------------------
 
 -- forward declarations and other locals
@@ -42,8 +40,7 @@ function scene:create( event )
 	local background = display.newRect( 0, 0, screenW, screenH )
 	background.anchorX = 0
 	background.anchorY = 0
-	    -- background.anchorX = 0
-    -- background.anchorY = 0
+
     background.x, background.y = 0, 0
 	background:setFillColor( .16, .14, .21 )
 	
@@ -51,11 +48,8 @@ function scene:create( event )
 	-- all display objects must be inserted into group
 	sceneGroup:insert( background )
 
-<<<<<<< HEAD
-	spawner.spawnController("start", spawnParams, physics, balloon_images)
-=======
-	spawner.spawnController("start", spawnParams, physics, "img/balloon_blue.png")
->>>>>>> fe2cda629b0e1804bb079bfb37f431f2f3bae56a
+	spawner.spawnController("start", spawnParams, physics)
+
 end
 
 

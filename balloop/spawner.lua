@@ -5,7 +5,7 @@ math.randomseed( os.time() )
 local spawnTimer
 local spawnedObjects = {}
 
-local image_table = {"balloon_lit.png"}
+local image_table = {"img/balloon_red.png", "img/balloon_blue.png", "img/balloon_red.png"}
 
 local function destroyBalloons(obj)
 	display.remove(obj)
