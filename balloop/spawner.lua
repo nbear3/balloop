@@ -3,6 +3,11 @@ math.randomseed( os.time() )
 local spawnTimer
 local spawnedObjects = {}
 
+local function destroyBalloons(obj)
+	display.remove(obj)
+	obj = nil
+end
+
 -- Spawn an item
 local function spawnItem( bounds, physics, image )
 
@@ -16,8 +21,10 @@ local function spawnItem( bounds, physics, image )
 		item:setFillColor( 1 )
 	end
 
+	local velocity = 100
+
 	physics.addBody( item, { density=1.0, friction=0.3, bounce=0.3 } )
-	item:setLinearVelocity(0, -100)
+	item:setLinearVelocity(0, -velocity)
 	
 	-- position item randomly within set bounds
 	item.x = math.random( bounds.xMin, bounds.xMax )
@@ -25,6 +32,8 @@ local function spawnItem( bounds, physics, image )
 
 	-- add item to spawnedObjects table for tracking purposes
 	spawnedObjects[#spawnedObjects+1] = item
+	destroyTime = (item.y + 100) / velocity
+	timer.performWithDelay(destroyTime * 1000, function() destroyBalloons(item); end)
 end
 
 
@@ -88,4 +97,5 @@ end
 --spawnController( "stop" )
 local public = {}
 public.spawnController = spawnController
+public.spawnedObjects = spawnedObjects
 return public
