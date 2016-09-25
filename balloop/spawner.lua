@@ -4,8 +4,9 @@ math.randomseed( os.time() )
 
 local spawnTimer
 local spawnedObjects = {}
+local plus_or_minus = 0
 
-local image_table = {"img/balloon_red.png", "img/balloon_blue.png", "img/balloon_green.png"}
+local image_table = {"img/balloon_red.png", "img/balloon_blue.png", "img/balloon_green.png", "img/balloon_purple.png"}
 
 local function destroyBalloons(obj)
 	display.remove(obj)
@@ -30,13 +31,31 @@ local function spawnItem( bounds, physics)
 		item:setFillColor( 1 )
 	end
 
-	local velocity = 100
+	local velocity = 150
 
 	physics.addBody( item, { density=1.0, friction=0.3, bounce=0.3 } )
 	item:setLinearVelocity(0, -velocity)
 	
 	-- position item randomly within set bounds
-	item.x = math.random( bounds.xMin, bounds.xMax )
+	if(#spawnedObjects > 0) then 
+		if(plus_or_minus == 0 and spawnedObjects[#spawnedObjects].x > 75) then
+			--make the next balloon spawn at least 50 pixels to the left of the previous
+			print("MINUS: ")
+			print(bounds.xMin)
+			print(spawnedObjects[#spawnedObjects].x - 50 )
+			item.x = math.random( bounds.xMin, spawnedObjects[#spawnedObjects].x - 50 )
+			plus_or_minus = 1
+		else
+			--make the next balloon spawn at least 50 pixels to the right of the previous
+			print("PLUS: ")
+			print(spawnedObjects[#spawnedObjects].x + 50 )
+			print(bounds.xMax)
+			item.x = math.random( spawnedObjects[#spawnedObjects].x +  50 , bounds.xMax )
+			plus_or_minus = 0
+		end
+	else
+		item.x = math.random( bounds.xMin, bounds.xMax )
+	end
 	item.y = math.random( bounds.yMin, bounds.yMax )
 
 	-- add item to spawnedObjects table for tracking purposes
