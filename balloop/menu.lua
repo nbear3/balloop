@@ -24,6 +24,9 @@ local function onPlayBtnRelease()
 	return true	-- indicates successful touch
 end
 
+local screenW, screenH = display.contentWidth, display.contentHeight
+local halfW, halfH = screenW * 0.5, screenH * 0.5
+
 function scene:create( event )
 	local sceneGroup = self.view
 
@@ -33,23 +36,18 @@ function scene:create( event )
 	-- e.g. add display objects to 'sceneGroup', add touch listeners, etc.
 
 	-- display a background image
-	local background = display.newImageRect( "background.jpg", display.contentWidth, display.contentHeight )
-	background.anchorX = 0
-	background.anchorY = 0
-	background.x, background.y = 0, 0
+	local background = display.newImageRect( "balloop_title.png", 360, 480 )
+	background.anchorX = .5
+	background.anchorY = .5
+	background.x, background.y = display.contentCenterX, display.contentCenterY
 	
-	-- create/position logo/title image on upper-half of the screen
-	local titleLogo = display.newImageRect( "logo.png", 264, 42 )
-	titleLogo.x = display.contentWidth * 0.5
-	titleLogo.y = 100
 	
 	-- create a widget button (which will loads level1.lua on release)
 	playBtn = widget.newButton{
-		label="Play Now",
-		labelColor = { default={255}, over={128} },
-		default="button.png",
-		over="button-over.png",
-		width=154, height=40,
+
+		defaultFile="balloon_lit.png",
+		overFile="balloon.png",
+		width=96, height=96,
 		onRelease = onPlayBtnRelease	-- event listener function
 	}
 	playBtn.x = display.contentWidth*0.5
@@ -57,7 +55,6 @@ function scene:create( event )
 	
 	-- all display objects must be inserted into group
 	sceneGroup:insert( background )
-	sceneGroup:insert( titleLogo )
 	sceneGroup:insert( playBtn )
 end
 
