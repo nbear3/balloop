@@ -51,7 +51,11 @@ function scene:create( event )
 	-- all display objects must be inserted into group
 	sceneGroup:insert( background )
 
+<<<<<<< HEAD
 	spawner.spawnController("start", spawnParams, physics, balloon_images)
+=======
+	spawner.spawnController("start", spawnParams, physics, "img/balloon_blue.png")
+>>>>>>> fe2cda629b0e1804bb079bfb37f431f2f3bae56a
 end
 
 
