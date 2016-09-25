@@ -38,10 +38,15 @@ end
 local function balloonTapListener( event )
 	event.target:setSequence("purplePop")
 	event.target:play()
+	
+    mySource = audio.play(sound_table.blop)
+    return true
+end
+
+local function balloonTapState( event )
 	if(event.phase == "ended") then
 		destroyBalloons(event.target)
 	end
-    mySource = audio.play(sound_table.blop)
 end
 
 local function calculateColorIndex(color_table)
@@ -113,6 +118,7 @@ local function spawnItem( bounds, physics)
 	timer.performWithDelay(destroyTime * 1000, function() destroyBalloons(item); end)
 
 	item:addEventListener( "tap", balloonTapListener )
+	item:addEventListener('sprite', balloonTapState)
 end
 
 
