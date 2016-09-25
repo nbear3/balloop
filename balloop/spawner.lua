@@ -1,21 +1,30 @@
 math.randomseed( os.time() )
 
+
+
 local spawnTimer
 local spawnedObjects = {}
+
+local image_table = {"balloon_lit.png"}
 
 local function destroyBalloons(obj)
 	display.remove(obj)
 	obj = nil
 end
 
+local function balloonTapListener( event )
+    destroyBalloons(event.target)
+end
+
 -- Spawn an item
-local function spawnItem( bounds, physics, image )
+local function spawnItem( bounds, physics)
 
 	local item
 
 	-- create sample item
-	if(image ~= nil) then
-		item = display.newImageRect( image, 90, 90 )
+	if(image_table ~= nil) then
+		local image_index = math.random(1, table.maxn(image_table))
+		item = display.newImageRect( image_table[image_index], 96, 96 )
 	else
 		item = display.newCircle( 0, 0, 20 )
 		item:setFillColor( 1 )
@@ -34,12 +43,13 @@ local function spawnItem( bounds, physics, image )
 	spawnedObjects[#spawnedObjects+1] = item
 	destroyTime = (item.y + 100) / velocity
 	timer.performWithDelay(destroyTime * 1000, function() destroyBalloons(item); end)
+
+	item:addEventListener( "tap", balloonTapListener )
 end
 
 
 -- Spawn controller
-local function spawnController( action, params, physics, image )
-
+local function spawnController( action, params, physics)
 	-- cancel timer on "start" or "stop", if it exists
 	if ( spawnTimer and ( action == "start" or action == "stop" ) ) then
 		timer.cancel( spawnTimer )
@@ -62,8 +72,8 @@ local function spawnController( action, params, physics, image )
 		-- if spawnInitial > 0, spawn n item(s) instantly
 		if ( spawnInitial > 0 ) then
 			for n = 1,spawnInitial do
-				if(image ~= nil) then
-					spawnItem( spawnBounds, physics, image )
+				if(image_table ~= nil) then
+					spawnItem( spawnBounds, physics)
 				else
 					spawnItem( spawnBounds, physics )
 				end
@@ -71,9 +81,9 @@ local function spawnController( action, params, physics, image )
 		end
 
 		-- start repeating timer to spawn items
-		if(image ~= nil) then
+		if(image_table ~= nil) then
 			spawnTimer = timer.performWithDelay( spawnTime,
-				function() spawnItem( spawnBounds, physics, image ); end, -1)
+				function() spawnItem( spawnBounds, physics); end, -1)
 		else 
 			spawnTimer = timer.performWithDelay( spawnTime,
 				function() spawnItem( spawnBounds, physics ); end, -1)

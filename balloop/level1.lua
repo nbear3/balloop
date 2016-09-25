@@ -3,7 +3,6 @@
 -- level1.lua
 --
 -----------------------------------------------------------------------------------------
-
 local composer = require( "composer" )
 local scene = composer.newScene()
 
@@ -14,13 +13,16 @@ physics.setGravity(0, 0)
 
 local spawner = require( "spawner" )
 local spawnParams = {
-	xMin = 0,
-	xMax = display.contentWidth,
+	xMin = 50,
+	xMax = display.contentWidth - 50,
+	xDelta = 50,
 	yMin = display.contentHeight + 100,
-	yMax = display.contentHeight + 1000,
-	spawnTime = 500,
+	yMax = display.contentHeight + 101,
+	spawnTime = 1000,
 	spawnInitial = 0
 }
+
+local balloon_images = {"balloon_lit.png"}
 
 --------------------------------------------
 
@@ -49,7 +51,7 @@ function scene:create( event )
 	-- all display objects must be inserted into group
 	sceneGroup:insert( background )
 
-	spawner.spawnController("start", spawnParams, physics, "balloon.png")
+	spawner.spawnController("start", spawnParams, physics, balloon_images)
 end
 
 
