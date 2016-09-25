@@ -24,6 +24,15 @@ local function onPlayBtnRelease()
 	return true	-- indicates successful touch
 end
 
+-- 'onRelease' event listener for credBtn
+local function onCredBtnRelease()
+	
+	-- go to level1.lua scene
+	composer.gotoScene( "credits", "fade", 500 )
+	
+	return true	-- indicates successful touch
+end
+
 local screenW, screenH = display.contentWidth, display.contentHeight
 local halfW, halfH = screenW * 0.5, screenH * 0.5
 
@@ -51,11 +60,21 @@ function scene:create( event )
 		onRelease = onPlayBtnRelease	-- event listener function
 	}
 	playBtn.x = display.contentWidth*0.5
-	playBtn.y = display.contentHeight - 125
+	playBtn.y = display.contentHeight - 125	
+
+	-- create a button to show credits
+	credBtn = widget.newButton{
+		defaultFile="img/credits_button.png",
+		width=60, height=15,
+		onRelease = onCredBtnRelease
+	}
+	credBtn.x = display.contentWidth - 20
+	credBtn.y = display.contentHeight - 15
 	
 	-- all display objects must be inserted into group
 	sceneGroup:insert( background )
 	sceneGroup:insert( playBtn )
+	sceneGroup:insert( credBtn )
 end
 
 function scene:show( event )
