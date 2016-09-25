@@ -10,6 +10,7 @@ local scene = composer.newScene()
 -- include Corona's "physics" library
 local physics = require "physics"
 physics.start(); physics.pause()
+physics.setGravity(0, 0)
 
 --------------------------------------------
 
@@ -29,15 +30,19 @@ function scene:create( event )
 	local background = display.newRect( 0, 0, screenW, screenH )
 	background.anchorX = 0
 	background.anchorY = 0
+	    -- background.anchorX = 0
+    -- background.anchorY = 0
+    background.x, background.y = 0, 0
 	background:setFillColor( .16, .14, .21 )
 	
 	-- make a crate (off-screen), position it, and rotate slightly
-	local crate = display.newImageRect( "crate.png", 90, 90 )
-	crate.x, crate.y = 160, -100
+	local crate = display.newImageRect( "balloon.png", 96, 96 )
+	crate.x, crate.y = 160, 160
 	crate.rotation = 15
 	
 	-- add physics to the crate
 	physics.addBody( crate, { density=1.0, friction=0.3, bounce=0.3 } )
+	crate:setLinearVelocity(0, -100)
 	
 	
 	-- all display objects must be inserted into group
