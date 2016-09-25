@@ -46,7 +46,7 @@ function scene:create( event )
 	playBtn = widget.newButton{
 
 		defaultFile="balloon_lit.png",
-		overFile="balloon.png",
+		overFile="img/balloon_red.png",
 		width=96, height=96,
 		onRelease = onPlayBtnRelease	-- event listener function
 	}
