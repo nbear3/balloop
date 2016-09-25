@@ -25,31 +25,31 @@ purple_sheet = graphics.newImageSheet("img/balloon_purple_sheet.png", sheetOptio
 local animations_table = {
 
 	{ name = "redPop",
-		sheet = red_sheet
+		sheet = red_sheet,
         start = 1,
         count = 4,
-        time = 100,
+        time = 200,
         loopCount = 1,
         loopDirection = "forward"},
 	{ name = "bluePop",
-		sheet = blue_sheet
+		sheet = blue_sheet,
         start = 1,
         count = 4,
-        time = 100,
+        time = 200,
         loopCount = 1,
         loopDirection = "forward"},
 	{ name = "greenPop",
-		sheet = green_sheet
+		sheet = green_sheet,
         start = 1,
         count = 4,
-        time = 100,
+        time = 200,
         loopCount = 1,
         loopDirection = "forward"},
 	{ name = "purplePop",
-		sheet = purple_sheet
+		sheet = purple_sheet,
         start = 1,
         count = 4,
-        time = 100,
+        time = 200,
         loopCount = 1,
         loopDirection = "forward"}
 }
@@ -64,9 +64,9 @@ end
 local function balloonTapListener( event )
 	if(event.target.color == "red") then
 		event.target:setSequence("redPop")
-	elseif(event.target.color == "blue")
+	elseif(event.target.color == "blue") then
 		event.target:setSequence("bluePop")
-	elseif(event.target.color == "green")
+	elseif(event.target.color == "green") then
 		event.target:setSequence("greenPop")
 	else
 		event.target:setSequence("purplePop")
@@ -138,22 +138,26 @@ local function spawnItem( bounds, physics)
 	local index = calculateColorIndex()
 	if(index == 1) then
 		sheet = red_sheet
+		item = display.newSprite( sheet, animations_table )
 		item.color = "red"
 	elseif(index == 2) then
 		sheet = blue_sheet
+		item = display.newSprite( sheet, animations_table )
 		item.color = "blue"
-	elseif(index == 3
+	elseif(index == 3) then
 		sheet = green_sheet
+		item = display.newSprite( sheet, animations_table )
 		item.color = "green"
 	else
 		sheet = purple_sheet
+		item = display.newSprite( sheet, animations_table )
 		item.color = "purple"
 	end
-	item = display.newSprite( sheet, animations_table )
 
 	local velocity = 150
 
 	physics.addBody( item, { density=1.0, friction=0.3, bounce=0.3 } )
+	item.isFixedRotation = true
 	item:setLinearVelocity(0, -velocity)
 	
 	-- position item randomly within set bounds
