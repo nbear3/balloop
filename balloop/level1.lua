@@ -48,7 +48,8 @@ function scene:create( event )
 	
 	-- all display objects must be inserted into group
 	sceneGroup:insert( background )
-	--sceneGroup:insert( crate )
+
+	spawner.spawnController("start", spawnParams, physics, "img/balloon_blue.png")
 end
 
 
@@ -102,8 +103,6 @@ scene:addEventListener( "create", scene )
 scene:addEventListener( "show", scene )
 scene:addEventListener( "hide", scene )
 scene:addEventListener( "destroy", scene )
-
-spawner.spawnController("start", spawnParams, physics, "balloon_red.png")
 
 -----------------------------------------------------------------------------------------
 
