@@ -10,6 +10,17 @@ local scene = composer.newScene()
 -- include Corona's "physics" library
 local physics = require "physics"
 physics.start(); physics.pause()
+physics.setGravity(0, 0)
+
+local spawner = require( "spawner" )
+local spawnParams = {
+	xMin = 0,
+	xMax = display.contentWidth,
+	yMin = display.contentHeight + 100,
+	yMax = display.contentHeight + 1000,
+	spawnTime = 500,
+	spawnInitial = 0
+}
 
 --------------------------------------------
 
@@ -32,17 +43,17 @@ function scene:create( event )
 	background:setFillColor( .16, .14, .21 )
 	
 	-- make a crate (off-screen), position it, and rotate slightly
-	local crate = display.newImageRect( "crate.png", 90, 90 )
-	crate.x, crate.y = 160, -100
-	crate.rotation = 15
+	--local crate = display.newImageRect( "crate.png", 90, 90 )
+	--crate.x, crate.y = 160, -100
+	--crate.rotation = 15
 	
 	-- add physics to the crate
-	physics.addBody( crate, { density=1.0, friction=0.3, bounce=0.3 } )
+	--physics.addBody( crate, { density=1.0, friction=0.3, bounce=0.3 } )
 	
 	
 	-- all display objects must be inserted into group
 	sceneGroup:insert( background )
-	sceneGroup:insert( crate )
+	--sceneGroup:insert( crate )
 end
 
 
@@ -89,7 +100,6 @@ function scene:destroy( event )
 	package.loaded[physics] = nil
 	physics = nil
 end
-
 ---------------------------------------------------------------------------------
 
 -- Listener setup
@@ -97,6 +107,8 @@ scene:addEventListener( "create", scene )
 scene:addEventListener( "show", scene )
 scene:addEventListener( "hide", scene )
 scene:addEventListener( "destroy", scene )
+
+spawner.spawnController("start", spawnParams, physics, "balloon.png")
 
 -----------------------------------------------------------------------------------------
 
